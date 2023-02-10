@@ -1,5 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import 'antd/dist/reset.css';
+import {
+  Button,
+  Input
+} from 'antd'
 
 function App() {
   return (
@@ -18,6 +23,10 @@ function App() {
           Learn React
         </a>
       </header>
+    <div className="app">
+      <Input placeholder="请输入" />
+      <Button type='primary'>按钮</Button>
+    </div>
     </div>
   );
 }
