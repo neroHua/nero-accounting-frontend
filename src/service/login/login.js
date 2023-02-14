@@ -1,4 +1,4 @@
-import {get, post} from '../../utils/axios.js'
+import { post} from '../../utils/axios.js'
 
 export function loginService(data) {
   return post(
@@ -6,8 +6,3 @@ export function loginService(data) {
     data,
   )
 }
-
-export default {
-	loginService
-}
-
