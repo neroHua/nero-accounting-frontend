@@ -89,11 +89,3 @@ export function deleteMethod(url, params={}, headers = {'Content-Type':'applicat
     })
   })
 }
-
-export default {
-  get,
-  post,
-  put,
-  deleteMethod,
-}
-
