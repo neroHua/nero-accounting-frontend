@@ -10,8 +10,13 @@ const LoginForm: React.FC = props => {
   });
 
   const onFinish = (values: any) => {
-    loginService(values);
-    console.log('Success:', values);
+    loginService(values)
+      .then(successResponse => {
+        console.log('Success:', successResponse);
+      })
+      .catch(failResponse => {
+        console.log('fail', failResponse);
+      });
   };
   
   const onFinishFailed = (errorInfo: any) => {
