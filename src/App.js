@@ -1,10 +1,24 @@
 import 'antd/dist/reset.css';
-import { useRoutes } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import routes from './router'
 
 function App() {
-  const elements = useRoutes(routes);
-  return elements;
+  return (
+    <BrowserRouter>
+      <Routes>
+        {routes.map((item, index) => {
+            return (
+              <Route
+                key={index}
+                exact
+                path={item.path}
+                element={<item.element/>}
+              />
+            );
+          })}
+      </Routes>
+  </BrowserRouter>
+  );
 }
 
 export default App;
