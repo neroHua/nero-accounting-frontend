@@ -23,7 +23,7 @@ httpService.interceptors.response.use(response => {
 })
 
 // get请求的封装
-export function get(url, params={}, headers = {'Content-Type':'application/json'}) {
+export async function  get(url, params={}, headers = {'Content-Type':'application/json'}) {
   return new Promise((resolve,reject) => {
     httpService({
       url: url,
@@ -39,7 +39,7 @@ export function get(url, params={}, headers = {'Content-Type':'application/json'
 }
 
 // post请求封装 
-export function post(url, data = {}, headers = {'Content-Type':'application/json'}) {
+export async function post(url, data = {}, headers = {'Content-Type':'application/json'}) {
   return new Promise((resolve,reject) => {
     httpService({
       url: url,
@@ -55,7 +55,7 @@ export function post(url, data = {}, headers = {'Content-Type':'application/json
 }
 
 // put请求封装 
-export function put(url, data = {}, headers = {'Content-Type':'application/json'}) {
+export async function put(url, data = {}, headers = {'Content-Type':'application/json'}) {
   return new Promise((resolve,reject) => {
     httpService({
       url: url,
@@ -71,7 +71,7 @@ export function put(url, data = {}, headers = {'Content-Type':'application/json'
 }
 
 // delete请求的封装
-export function deleteMethod(url, params={}, headers = {'Content-Type':'application/json'}) {
+export async function deleteMethod(url, params={}, headers = {'Content-Type':'application/json'}) {
   return new Promise((resolve,reject) => {
     httpService({
       url: url,
