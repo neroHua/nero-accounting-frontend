@@ -9,15 +9,10 @@ const LoginForm: React.FC = props => {
     password: 'admin',
   });
 
-  const onFinish = (values: any) => {
-    loginService(values)
-      .then(successResponse => {
-        console.log('Success:', successResponse);
-      })
-      .catch(failResponse => {
-        console.log('fail', failResponse);
-      });
-  };
+  const onFinish = async (values: any) => {
+    const a = await loginService(values)
+    console.log(a);
+  }
   
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
