@@ -1,5 +1,6 @@
 import LoginForm from "../pages/login/index.tsx"
 import TagPage from "../pages/tag/index.tsx"
+import AccountingPage from "../pages/accounting/index.tsx"
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
   {
     path: "/tag",
     element: TagPage,
+  },
+  {
+    path: "/accounting",
+    element: AccountingPage,
   }
 ]
 
