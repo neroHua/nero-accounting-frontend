@@ -4,7 +4,7 @@ import { loginService} from '../../service/login/login.js';
 
 const LoginForm: React.FC = props => {
 
-  const [user, setUser] = useState({
+  const [user] = useState({
     userId: 'admin',
     password: 'admin',
   });
