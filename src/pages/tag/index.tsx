@@ -37,7 +37,7 @@ const TagPage: React.FC = props => {
   ];
 
   return (
-    <div id='loginForm'>
+    <div>
       <Table dataSource={dataSource} columns={columns} />;
     </div>
   );
