@@ -3,6 +3,7 @@ import { Table } from 'antd';
 import { tagGetByPageService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
+import moment from 'moment';
 
 const TagPage: React.FC<any> = () => {
   let location = useLocation();
@@ -28,6 +29,7 @@ const TagPage: React.FC<any> = () => {
   useEffect(() => {
     const {pageNumber = 1, pageSize = 10} = querystring.parse(location.search);
     getTagList({pageNumber, pageSize});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
   const columns = [
@@ -38,10 +40,16 @@ const TagPage: React.FC<any> = () => {
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      render: (text, record, index) => {
+        return moment(record.createTime).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+      },
     },
     {
       title: '修改时间',
       dataIndex: 'updateTime',
+      render: (text, record, index) => {
+        return moment(record.createTime).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+      },
     },
     {
       title: '创建者id',
