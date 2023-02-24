@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table } from 'antd';
+import { Table, Button } from 'antd';
 import { tagGetByPageService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
@@ -75,11 +75,40 @@ const TagPage: React.FC<any> = () => {
       title: '父标签id',
       dataIndex: 'parentId',
     },
+    {
+      title: '操作',
+      dataIndex: 'operation',
+      render: (text, record, index) => {
+        return (<div>
+          <Button
+            type="primary"
+          >
+            查看
+          </Button>
+          <Button
+            type="primary"
+          >
+            修改
+          </Button>
+          <Button
+            type="primary"
+            danger
+          >
+            删除
+          </Button>
+        </div>);
+      },
+    },
   ];
 
   return (
     <div>
-      <Table dataSource={tagList} rowKey={'id'} columns={columns} pagination={pagination}/>;
+      <Table
+        dataSource={tagList}
+        rowKey={'id'}
+        columns={columns}
+        pagination={pagination}
+      />;
     </div>
   );
 };
