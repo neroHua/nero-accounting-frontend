@@ -33,6 +33,8 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
       <Form
         form={form}
         onFinish={onSubmit}
+        labelCol={{ span: 6 }}
+        wrapperCol={{ span: 14 }}
       >
         <Form.Item
           label='id'
@@ -45,6 +47,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
             disabled
             min={1}
             placeholder='请输入id!'
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item
@@ -84,6 +87,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
             disabled
             min={1}
             placeholder='请输入创建者id!'
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item
@@ -97,6 +101,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
             disabled
             min={1}
             placeholder='请输入更新者id!'
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item
@@ -145,6 +150,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
           <InputNumber
             min={1}
             placeholder='请输入父标签id!'
+            style={{ width: '100%' }}
           />
         </Form.Item>
         <Form.Item>
