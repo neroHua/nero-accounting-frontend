@@ -4,6 +4,8 @@ import { tagGetByPageService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
 import moment from 'moment';
+// @ts-ignore
+import TagUpdate from './component/tagUpdate.tsx'
 
 const TagPage: React.FC<any> = () => {
   let location = useLocation();
@@ -109,6 +111,14 @@ const TagPage: React.FC<any> = () => {
         columns={columns}
         pagination={pagination}
       />;
+
+      <TagUpdate
+        visible={true}
+        onCancel={() => {}}
+        onSubmit={async () => {}}
+        values={[]}
+      >
+      </TagUpdate>
     </div>
   );
 };
