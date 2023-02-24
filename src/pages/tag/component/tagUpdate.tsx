@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Drawer, Form, Input, InputNumber, DatePicker } from 'antd';
+import { Drawer, Form, Input, InputNumber, DatePicker, Button } from 'antd';
 
 interface TagUpdateProps {
   visible: boolean;
@@ -139,13 +139,21 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
           label='父标签id'
           name='parentId'
           rules={[
-            {required: true, message: '请输入父标签id!'},
+            {required: false, message: '请输入父标签id!'},
           ]}
         >
           <InputNumber
             min={1}
             placeholder='请输入父标签id!'
           />
+        </Form.Item>
+        <Form.Item>
+          <Button 
+            type='primary'
+            htmlType='submit'
+          >
+            提交
+          </Button>
         </Form.Item>
       </Form>
   </Drawer>
