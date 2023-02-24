@@ -10,8 +10,8 @@ const LoginForm: React.FC = props => {
   });
 
   const onFinish = async (values: any) => {
-    const a = await loginService(values)
-    console.log(a);
+    const data = await loginService(values)
+    localStorage.setItem('token', data);
   }
   
   const onFinishFailed = (errorInfo: any) => {
