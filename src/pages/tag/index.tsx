@@ -1,81 +1,80 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'antd';
 import { tagGetByPageService } from '../../service/tag/tag.js';
+import { useLocation } from 'react-router-dom';
+import querystring from "query-string";
 
-interface TagProps {
-  pageSize: number;
-  pageNumber: number;
-  keyword: string;
-}
+const TagPage: React.FC<any> = () => {
+  let location = useLocation();
 
-const TagPage: React.FC<TagProps> = props => {
-  const { pageSize, pageNumber, keyword} = props;
-  const [pagination , setPagination] = useState<any>({current: pageNumber || 1, pageSize: pageSize || 10});
+  const [pagination , setPagination] = useState<any>({
+    current: 1,
+    pageSize: 10,
+    total: 0,
+  });
   const [tagList , setTagList] = useState<any[]>([]);
 
-  console.log(pageSize, pageNumber, pagination);
+  const getTagList = async (request : any) => {
+    const data = await tagGetByPageService({...request})
 
-  const init = async () => {
-    console.log(pageSize, pageNumber, pagination);
-    const data = await tagGetByPageService({pageSize : 10, pageNumber : 1})
-    setTagList(data.dataList);
+    setTagList(data?.dataList || []);
+    setPagination({
+      ...pagination,
+      current: request.pageNumber,
+      total: data?.totalCount
+    });
   };
 
   useEffect(() => {
-    init();
-  }, [props]);
+    const {pageNumber = 1, pageSize = 10} = querystring.parse(location.search);
+    getTagList({pageNumber, pageSize});
+  }, [location]);
 
-  const dataSource = [
-    {
-      key: '1',
-      name: '胡彦斌',
-      age: 32,
-      address: '西湖区湖底公园1号',
-    },
-    {
-      key: '2',
-      name: '胡彦祖',
-      age: 42,
-      address: '西湖区湖底公园1号',
-    },
-  ];
-  
   const columns = [
     {
       title: 'id',
       dataIndex: 'id',
+      key: 'id',
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
+      key: 'createTime',
     },
     {
       title: '修改时间',
       dataIndex: 'updateTime',
+      key: 'updateTime',      
     },
     {
       title: '创建者id',
       dataIndex: 'createUserId',
+      key: 'createUserId',      
     },
     {
       title: '更新者id',
       dataIndex: 'updateUserId',
+      key: 'updateUserId',
     },
     {
       title: '编码',
       dataIndex: 'code',
+      key: 'code',
     },
     {
       title: '名称',
       dataIndex: 'name',
+      key: 'name',
     },
     {
       title: '描述',
       dataIndex: 'description',
+      key: 'description',
     },
     {
       title: '父标签id',
       dataIndex: 'parentId',
+      key: 'parentId',
     },
   ];
 
