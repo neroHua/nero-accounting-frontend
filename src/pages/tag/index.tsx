@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'antd';
-import { tagGetByPageService } from '../../service/tag/tag.js';
+import { tagGetByPageService, tagUpdateService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
 import moment from 'moment';
@@ -44,6 +44,15 @@ const TagPage: React.FC<any> = () => {
     });
   }
 
+  const tagUpdateSubmit = async (values : any) => {
+    const data = await tagUpdateService({...values});
+    setTagUpdate({
+      visible : false,
+      values: {}
+    });
+    getTagList({...pagination, pageNumber: pagination.current});
+  }
+
   useEffect(() => {
     const {pageNumber = 1, pageSize = 10} = querystring.parse(location.search);
     getTagList({pageNumber, pageSize});
@@ -66,7 +75,7 @@ const TagPage: React.FC<any> = () => {
       title: '修改时间',
       dataIndex: 'updateTime',
       render: (text, record, index) => {
-        return moment(record.createTime).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
+        return moment(record.updateTime).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
       },
     },
     {
@@ -100,11 +109,6 @@ const TagPage: React.FC<any> = () => {
         return (<div>
           <Button
             type="primary"
-          >
-            查看
-          </Button>
-          <Button
-            type="primary"
             onClick={(e) => {
               tagUpdateShow(record);
             }}
@@ -136,7 +140,7 @@ const TagPage: React.FC<any> = () => {
         onCancel={() => {
           setTagUpdate({...tagUpdate, visible: false});
         }}
-        onSubmit={async () => {}}
+        onSubmit={tagUpdateSubmit}
         values={tagUpdate.values}
       >
       </TagUpdate>
