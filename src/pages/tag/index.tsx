@@ -28,6 +28,15 @@ const TagPage: React.FC<any> = () => {
     });
   };
 
+  const [tagUpdate , setTagUpdate] = useState<any>({
+    visible: true,
+    values: {},
+  });
+
+  const tagUpdateShow = (record : any) => {
+    setTagUpdate({visible : true, values: record});
+  }
+
   useEffect(() => {
     const {pageNumber = 1, pageSize = 10} = querystring.parse(location.search);
     getTagList({pageNumber, pageSize});
@@ -89,6 +98,9 @@ const TagPage: React.FC<any> = () => {
           </Button>
           <Button
             type="primary"
+            onClick={(e) => {
+              tagUpdateShow(record);
+            }}
           >
             修改
           </Button>
@@ -113,10 +125,12 @@ const TagPage: React.FC<any> = () => {
       />;
 
       <TagUpdate
-        visible={true}
-        onCancel={() => {}}
+        visible={tagUpdate.visible}
+        onCancel={() => {
+          setTagUpdate({...tagUpdate, visible: false});
+        }}
         onSubmit={async () => {}}
-        values={[]}
+        values={tagUpdate.values}
       >
       </TagUpdate>
     </div>
