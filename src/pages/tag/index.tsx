@@ -34,53 +34,44 @@ const TagPage: React.FC<any> = () => {
     {
       title: 'id',
       dataIndex: 'id',
-      key: 'id',
     },
     {
       title: '创建时间',
       dataIndex: 'createTime',
-      key: 'createTime',
     },
     {
       title: '修改时间',
       dataIndex: 'updateTime',
-      key: 'updateTime',      
     },
     {
       title: '创建者id',
       dataIndex: 'createUserId',
-      key: 'createUserId',      
     },
     {
       title: '更新者id',
       dataIndex: 'updateUserId',
-      key: 'updateUserId',
     },
     {
       title: '编码',
       dataIndex: 'code',
-      key: 'code',
     },
     {
       title: '名称',
       dataIndex: 'name',
-      key: 'name',
     },
     {
       title: '描述',
       dataIndex: 'description',
-      key: 'description',
     },
     {
       title: '父标签id',
       dataIndex: 'parentId',
-      key: 'parentId',
     },
   ];
 
   return (
     <div>
-      <Table dataSource={tagList} columns={columns} pagination={pagination}/>;
+      <Table dataSource={tagList} rowKey={'id'} columns={columns} pagination={pagination}/>;
     </div>
   );
 };
