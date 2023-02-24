@@ -23,7 +23,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
     >
       <p>Some contents...</p>
       <p>Some contents...</p>
-      <p>Some contents...</p>
+      <p>{JSON.stringify(values)}</p>
   </Drawer>
   );
 };
