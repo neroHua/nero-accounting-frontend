@@ -39,7 +39,7 @@ const TagPage: React.FC<any> = () => {
       values: {
         ...record,
         createTime: moment(record.createTime),
-        updateTime: moment(record.updateTime)
+        updateTime: moment(record.updateTime),
       }
     });
   }
