@@ -34,7 +34,14 @@ const TagPage: React.FC<any> = () => {
   });
 
   const tagUpdateShow = (record : any) => {
-    setTagUpdate({visible : true, values: record});
+    setTagUpdate({
+      visible : true,
+      values: {
+        ...record,
+        createTime: moment(record.createTime),
+        updateTime: moment(record.updateTime)
+      }
+    });
   }
 
   useEffect(() => {
