@@ -28,7 +28,7 @@ const TagPage: React.FC<any> = () => {
       ...pagination,
       current: request.pageNumber,
       pageSize: request.pageSize,
-      total: 1000,
+      total: data.totalCount,
     });
   };
 
