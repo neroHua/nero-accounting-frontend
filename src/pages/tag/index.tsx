@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button } from 'antd';
-import { tagGetByPageService, tagUpdateService } from '../../service/tag/tag.js';
+import { Table, Button, Pagination } from 'antd';
+import { tagGetByPageService, tagAddService, tagUpdateService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
 import moment from 'moment';
 // @ts-ignore
 import TagUpdate from './component/tagUpdate.tsx'
+// @ts-ignore
+import TagAdd from './component/tagAdd.tsx'
 
 const TagPage: React.FC<any> = () => {
   let location = useLocation();
@@ -14,6 +16,7 @@ const TagPage: React.FC<any> = () => {
     current: 1,
     pageSize: 10,
     total: 0,
+    pageSizeOptions: [10, 20, 30, 50, 100]
   });
   const [tagList , setTagList] = useState<any[]>([]);
 
@@ -24,12 +27,36 @@ const TagPage: React.FC<any> = () => {
     setPagination({
       ...pagination,
       current: request.pageNumber,
-      total: data?.totalCount
+      pageSize: request.pageSize,
+      total: 1000,
     });
   };
 
+  const [tagAdd , setTagAdd] = useState<any>({
+    visible: false,
+    values: {},
+  });
+
+  const tagAddShow = (record : any) => {
+    setTagAdd({
+      visible : true,
+      values: {
+        ...record,
+      }
+    });
+  }
+
+  const tagAddSubmit = async (values : any) => {
+    const data = await tagAddService({...values});
+    setTagAdd({
+      visible : false,
+      values: {}
+    });
+    getTagList({...pagination, pageNumber: pagination.current});
+  }
+
   const [tagUpdate , setTagUpdate] = useState<any>({
-    visible: true,
+    visible: false,
     values: {},
   });
 
@@ -128,12 +155,38 @@ const TagPage: React.FC<any> = () => {
 
   return (
     <div>
+      <div>
+        <Button
+          type='primary'
+          onClick={(e) => {
+            tagAddShow({});
+          }}
+        >
+          新增
+        </Button>
+      </div>
       <Table
         dataSource={tagList}
         rowKey={'id'}
         columns={columns}
         pagination={pagination}
+        onChange={(pagination) => {
+          getTagList({
+            pageSize: pagination.pageSize,
+            pageNumber: pagination.current
+          });
+        }}
       />;
+
+      <TagAdd
+        visible={tagAdd.visible}
+        onCancel={() => {
+          setTagAdd({...tagAdd, visible: false});
+        }}
+        onSubmit={tagAddSubmit}
+        values={tagAdd.values}
+      >
+      </TagAdd>
 
       <TagUpdate
         visible={tagUpdate.visible}
