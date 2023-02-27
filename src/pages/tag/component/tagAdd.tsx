@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Drawer, Form, Input, InputNumber, DatePicker, Button } from 'antd';
+import { Drawer, Form, Input, InputNumber, Button } from 'antd';
 
 interface TagAddProps {
   visible: boolean;
