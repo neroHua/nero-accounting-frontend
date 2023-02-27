@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Table, Button, Pagination } from 'antd';
+import { Table, Button } from 'antd';
 import { tagGetByPageService, tagAddService, tagUpdateService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
@@ -48,6 +48,10 @@ const TagPage: React.FC<any> = () => {
 
   const tagAddSubmit = async (values : any) => {
     const data = await tagAddService({...values});
+    if (data?.success) {
+      return;
+    }
+
     setTagAdd({
       visible : false,
       values: {}
@@ -73,6 +77,10 @@ const TagPage: React.FC<any> = () => {
 
   const tagUpdateSubmit = async (values : any) => {
     const data = await tagUpdateService({...values});
+    if (data?.success) {
+      return;
+    }
+
     setTagUpdate({
       visible : false,
       values: {}
