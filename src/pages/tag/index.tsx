@@ -176,23 +176,24 @@ const TagPage: React.FC<any> = () => {
 
   return (
     <div>
-        <div style={{display: 'flex'}}>
-        <TagSearch
-          onSubmit={(values) => {
-            getTagList({...values, pageNumber: pagination.current, pageSize: pagination.pageSize});
-          }}
-          values={tagSearch.values}
-        >
-        </TagSearch>
-        <Button
-          type='primary'
-          onClick={(e) => {
-            tagAddShow({});
-          }}
-        >
-          新增
-        </Button>
-        </div>
+      <div style={{display: 'flex'}}>
+      <TagSearch
+        onSubmit={(values) => {
+          getTagList({...values, pageNumber: pagination.current, pageSize: pagination.pageSize});
+        }}
+        values={tagSearch.values}
+      >
+      </TagSearch>
+      <Button
+        type='primary'
+        onClick={(e) => {
+          tagAddShow({});
+        }}
+      >
+        新增
+      </Button>
+      </div>
+
       <Table
         dataSource={tagList}
         rowKey={'id'}
