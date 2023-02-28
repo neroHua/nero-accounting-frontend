@@ -20,17 +20,28 @@ const TagPage: React.FC<any> = () => {
     total: 0,
     pageSizeOptions: [10, 20, 30, 50, 100]
   });
+  const [tagSearch , setTagSearch] = useState<any>({
+    values: {},
+  });
   const [tagList , setTagList] = useState<any[]>([]);
 
   const getTagList = async (request : any) => {
     const data = await tagGetByPageService({...request})
 
     setTagList(data?.dataList || []);
+
     setPagination({
       ...pagination,
       current: request.pageNumber,
       pageSize: request.pageSize,
       total: data.totalCount,
+    });
+    setTagSearch({
+      values: {
+        codeEqual: request.codeEqual,
+        nameEqual: request.nameEqual,
+        parentId: request.parentId,
+      }
     });
   };
 
@@ -91,8 +102,8 @@ const TagPage: React.FC<any> = () => {
   }
 
   useEffect(() => {
-    const {pageNumber = 1, pageSize = 10} = querystring.parse(location.search);
-    getTagList({pageNumber, pageSize});
+    const {pageNumber = 1, pageSize = 10, codeEqual, nameEqual, parentId} = querystring.parse(location.search);
+    getTagList({pageNumber, pageSize, codeEqual, nameEqual, parentId});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
@@ -167,6 +178,10 @@ const TagPage: React.FC<any> = () => {
     <div>
         <div style={{display: 'flex'}}>
         <TagSearch
+          onSubmit={(values) => {
+            getTagList({...values, pageNumber: pagination.current, pageSize: pagination.pageSize});
+          }}
+          values={tagSearch.values}
         >
         </TagSearch>
         <Button
