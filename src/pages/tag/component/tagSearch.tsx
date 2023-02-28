@@ -32,25 +32,27 @@ const TagSearch : React.FC<TagSearchProps> = props => {
     >
       <Form.Item
         label='编码'
-        name='code'
+        name='codeEqual'
         rules={[
           {required: false, message: '请输入编码!'},
         ]}
       >
         <Input
           maxLength={32}
+          allowClear={true}
           placeholder='请输入编码!'
         />
       </Form.Item>
       <Form.Item
         label='名称'
-        name='name'
+        name='nameEqual'
         rules={[
           {required: false, message: '请输入名称!'},
         ]}
       >
         <Input
           maxLength={32}
+          allowClear={true}
           placeholder='请输入名称!'
         />
       </Form.Item>
