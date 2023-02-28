@@ -8,6 +8,8 @@ import moment from 'moment';
 import TagUpdate from './component/tagUpdate.tsx'
 // @ts-ignore
 import TagAdd from './component/tagAdd.tsx'
+// @ts-ignore
+import TagSearch from './component/tagSearch.tsx'
 
 const TagPage: React.FC<any> = () => {
   let location = useLocation();
@@ -163,7 +165,10 @@ const TagPage: React.FC<any> = () => {
 
   return (
     <div>
-      <div>
+        <div style={{display: 'flex'}}>
+        <TagSearch
+        >
+        </TagSearch>
         <Button
           type='primary'
           onClick={(e) => {
@@ -172,7 +177,7 @@ const TagPage: React.FC<any> = () => {
         >
           新增
         </Button>
-      </div>
+        </div>
       <Table
         dataSource={tagList}
         rowKey={'id'}
