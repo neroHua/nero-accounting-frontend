@@ -28,9 +28,9 @@ const TagPage: React.FC<any> = () => {
   const getTagList = async (request : any) => {
     const data = await tagGetByPageService({
       ...request,
-      codeEqual: !request.codeEqual ? null : request.codeEqual,
-      nameEqual: !request.nameEqual ? null : request.nameEqual,
-      parentId: !request.parentId ? null : request.parentId,
+      codeEqual: request.codeEqual ? request.codeEqual : null,
+      nameEqual: request.nameEqual ? request.nameEqual : null,
+      parentId: request.parentId ? request.parentId : null,
     })
 
     setTagList(data?.dataList || []);
