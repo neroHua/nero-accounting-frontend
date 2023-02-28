@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Button } from 'antd';
-import { tagGetByPageService, tagAddService, tagUpdateService } from '../../service/tag/tag.js';
+import { tagGetByPageService, tagAddService, tagUpdateService, tagDeleteService } from '../../service/tag/tag.js';
 import { useLocation } from 'react-router-dom';
 import querystring from "query-string";
 import moment from 'moment';
@@ -69,7 +69,15 @@ const TagPage: React.FC<any> = () => {
       visible : false,
       values: {}
     });
-    getTagList({...pagination, pageNumber: pagination.current});
+    getTagList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...tagSearch.values});
+  }
+
+  const tagDelete = async (record : any) => {
+    const data = await tagDeleteService(record.id);
+    if (data?.success) {
+      return;
+    }
+    getTagList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...tagSearch.values});
   }
 
   const [tagUpdate , setTagUpdate] = useState<any>({
@@ -98,7 +106,7 @@ const TagPage: React.FC<any> = () => {
       visible : false,
       values: {}
     });
-    getTagList({...pagination, pageNumber: pagination.current});
+    getTagList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...tagSearch.values});
   }
 
   useEffect(() => {
@@ -166,6 +174,9 @@ const TagPage: React.FC<any> = () => {
           <Button
             type="primary"
             danger
+            onClick={(e) => {
+              tagDelete(record);
+            }}
           >
             删除
           </Button>
