@@ -18,7 +18,7 @@ const TagPage: React.FC<any> = () => {
     current: 1,
     pageSize: 10,
     total: 0,
-    pageSizeOptions: [10, 20, 30, 50, 100]
+    pageSizeOptions: [10, 20, 30, 50, 100],
   });
   const [tagSearch , setTagSearch] = useState<any>({
     values: {},
@@ -26,7 +26,12 @@ const TagPage: React.FC<any> = () => {
   const [tagList , setTagList] = useState<any[]>([]);
 
   const getTagList = async (request : any) => {
-    const data = await tagGetByPageService({...request})
+    const data = await tagGetByPageService({
+      ...request,
+      codeEqual: !request.codeEqual ? null : request.codeEqual,
+      nameEqual: !request.nameEqual ? null : request.nameEqual,
+      parentId: !request.parentId ? null : request.parentId,
+    })
 
     setTagList(data?.dataList || []);
 
