@@ -44,12 +44,12 @@ export async function accountingTagAddService(data) {
 
 export async function accountingTagDeleteService(data) {
   return deleteMethod(
-    'accounting/tag' + data,
-    null,
+    'accounting/tag',
+    data,
   )
 }
 
-export async function accountingTagGetByPageService(data) {
+export async function accountingTagListService(data) {
   return get(
     'accounting/tag/list',
     data,
