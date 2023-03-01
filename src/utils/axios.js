@@ -71,12 +71,12 @@ export async function put(url, data = {}, headers = {'Content-Type':'application
 }
 
 // delete请求的封装
-export async function deleteMethod(url, params={}, headers = {'Content-Type':'application/json'}) {
+export async function deleteMethod(url, data={}, headers = {'Content-Type':'application/json'}) {
   return new Promise((resolve,reject) => {
     httpService({
       url: url,
       method: 'delete',
-      params: params,
+      data: JSON.stringify(data),
       headers: headers,
     }).then(res => {
       resolve(res);
