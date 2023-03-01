@@ -27,57 +27,59 @@ const AccountingSearch : React.FC<AccountingSearchProps> = props => {
     <Form
       form={form}
       onFinish={onSubmit}
-      labelCol={{ span: 8 }}
+      labelCol={{ span: 7 }}
       wrapperCol={{ span: 16 }}
       layout='inline'
     >
       <Form.Item
-        label='账单发生时间小'
+        label='发生时间小'
         name='billCreateTimeMin'
         rules={[
-          {required: false, message: '请输入账单发生时间小!'},
+          {required: false, message: '请输入发生时间小!'},
         ]}
       >
         <DatePicker
+          allowClear
           showTime
-          placeholder='请输入账单发生时间小!'
+          placeholder='请输入发生时间小!'
         />
       </Form.Item>
       <Form.Item
-        label='账单发生时间大'
+        label='发生时间大'
         name='billCreateTimeMax'
         rules={[
-          {required: false, message: '请输入账单发生时间大!'},
+          {required: false, message: '请输入发生时间大!'},
         ]}
       >
         <DatePicker
+          allowClear
           showTime
-          placeholder='请输入账单发生时间大!'
+          placeholder='请输入发生时间大!'
         />
       </Form.Item>
       <Form.Item
-        label='账单金额小'
+        label='金额小'
         name='billMoneyMin'
         rules={[
-          {required: false, message: '请输入账单金额小!'},
+          {required: false, message: '请输入金额小!'},
         ]}
       >
         <InputNumber
           min={0.01}
-          placeholder='请输入账单金额小!'
+          placeholder='请输入金额小!'
           style={{ width: '100%' }}
         />
       </Form.Item>
       <Form.Item
-        label='账单金额大'
+        label='金额大'
         name='billMoneyMax'
         rules={[
-          {required: false, message: '请输入账单金额大!'},
+          {required: false, message: '请输入金额大!'},
         ]}
       >
         <InputNumber
           min={0.01}
-          placeholder='请输入账单金额大!'
+          placeholder='请输入金额大!'
           style={{ width: '100%' }}
         />
       </Form.Item>
@@ -89,6 +91,7 @@ const AccountingSearch : React.FC<AccountingSearchProps> = props => {
           ]}
         >
           <Select
+            allowClear
             options={ValuableEnumeration}
             style={{ width: '100%' }}
           />
