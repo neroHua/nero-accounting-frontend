@@ -224,21 +224,21 @@ const AccountingPage: React.FC<any> = () => {
   return (
     <div>
       <div style={{display: 'flex'}}>
-      <AccountingSearch
-        onSubmit={(values) => {
-          getAccountingList({...values, pageNumber: pagination.current, pageSize: pagination.pageSize});
-        }}
-        values={accountingSearch.values}
-      >
-      </AccountingSearch>
-      <Button
-        type='primary'
-        onClick={(e) => {
-          accountingAddShow({});
-        }}
-      >
-        新增
-      </Button>
+        <AccountingSearch
+          onSubmit={(values) => {
+            getAccountingList({...values, pageNumber: pagination.current, pageSize: pagination.pageSize});
+          }}
+          values={accountingSearch.values}
+        >
+        </AccountingSearch>
+        <Button
+          type='primary'
+          onClick={(e) => {
+            accountingAddShow({});
+          }}
+        >
+          新增
+        </Button>
       </div>
 
       <Table
