@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Drawer, Form, Input, InputNumber, Button } from 'antd';
+import { Drawer, Form, InputNumber, Button } from 'antd';
 
 interface AccountingTagAddProps {
   visible: boolean;
