@@ -86,6 +86,7 @@ const AccountingSearch : React.FC<AccountingSearchProps> = props => {
       <Form.Item
           label='是否值得'
           name='valuable'
+          style={{width: '220px'}}
           rules={[
             {required: false, message: '请选择是否值得!'},
           ]}
@@ -93,7 +94,6 @@ const AccountingSearch : React.FC<AccountingSearchProps> = props => {
           <Select
             allowClear
             options={ValuableEnumeration}
-            style={{ width: '100%' }}
           />
         </Form.Item>
       <Form.Item>
