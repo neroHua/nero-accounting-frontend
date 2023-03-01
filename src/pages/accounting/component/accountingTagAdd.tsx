@@ -27,7 +27,7 @@ const AccountingTagAdd : React.FC<AccountingTagAddProps> = props => {
     data?.dataList?.forEach((item) => {
       tagListTemp.push({label : item.name + '  ' + item.code, value: item.id});
     });
-    console.log(tagListTemp)
+
     setTagList(tagListTemp);
   };
 
