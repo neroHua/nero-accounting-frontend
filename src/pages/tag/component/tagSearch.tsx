@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
-import { Form, Input, InputNumber, Button } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Form, Input, Button, Select } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import { tagGetByPageService } from '../../../service/tag/tag.js';
 
 interface TagSearchProps {
   onSubmit: (values: any) => Promise<void>;
@@ -11,6 +12,23 @@ const TagSearch : React.FC<TagSearchProps> = props => {
   const { onSubmit, values } = props;
 
   const [form] = Form.useForm();
+
+  const [tagList , setTagList] = useState<any[]>([]);
+
+  const searchTagList = async (values : any) => {
+    const data = await tagGetByPageService({
+      pageNumber: 1,
+      pageSize: 10,
+      nameLike: values ? values : null,
+    })
+
+    const tagListTemp: any[] = [];
+    data?.dataList?.forEach((item) => {
+      tagListTemp.push({label : item.name + '  ' + item.code, value: item.id});
+    });
+
+    setTagList(tagListTemp);
+  };
 
   useEffect(() => {
     form.setFieldsValue({
@@ -26,7 +44,7 @@ const TagSearch : React.FC<TagSearchProps> = props => {
     <Form
       form={form}
       onFinish={onSubmit}
-      labelCol={{ span: 6 }}
+      labelCol={{ span: 8 }}
       wrapperCol={{ span: 16 }}
       layout='inline'
     >
@@ -59,14 +77,19 @@ const TagSearch : React.FC<TagSearchProps> = props => {
       <Form.Item
         label='父标签id'
         name='parentId'
+        style={{width: '220px'}}
         rules={[
           {required: false, message: '请输入父标签id!'},
         ]}
       >
-        <InputNumber
-          min={1}
-          placeholder='请输入父标签id!'
-          style={{ width: '100%' }}
+        <Select
+          showSearch
+          allowClear
+          placeholder='请输入父标签名称'
+          showArrow={false}
+          filterOption={false}
+          onSearch={searchTagList}
+          options={tagList}
         />
       </Form.Item>
       <Form.Item>
