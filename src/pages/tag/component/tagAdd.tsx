@@ -29,6 +29,7 @@ const TagAdd : React.FC<TagAddProps> = props => {
       placement='right'
       onClose={onCancel}
       open={visible}
+      forceRender={true}
     >
       <Form
         form={form}
