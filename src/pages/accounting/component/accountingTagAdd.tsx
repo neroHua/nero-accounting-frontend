@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
-import { Drawer, Form, InputNumber, Button } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Drawer, Form, Button, Select } from 'antd';
+import { tagGetByPageService } from '../../../service/tag/tag.js';
 
 interface AccountingTagAddProps {
   visible: boolean;
@@ -12,6 +13,23 @@ const AccountingTagAdd : React.FC<AccountingTagAddProps> = props => {
   const { visible, onCancel, onSubmit, values } = props;
 
   const [form] = Form.useForm();
+
+  const [tagList , setTagList] = useState<any[]>([]);
+
+  const searchTagList = async (values : any) => {
+    const data = await tagGetByPageService({
+      pageNumber: 1,
+      pageSize: 10,
+      nameLike: values ? values : null,
+    })
+
+    const tagListTemp: any[] = [];
+    data?.dataList?.forEach((item) => {
+      tagListTemp.push({label : item.name + '  ' + item.code, value: item.id});
+    });
+    console.log(tagListTemp)
+    setTagList(tagListTemp);
+  };
 
   useEffect(() => {
     form.setFieldsValue({
@@ -44,10 +62,14 @@ const AccountingTagAdd : React.FC<AccountingTagAddProps> = props => {
             {required: true, message: '请输入标签id!'},
           ]}
         >
-          <InputNumber
-            min={1}
-            placeholder='请输入标签id!'
-            style={{ width: '100%' }}
+          <Select
+            showSearch
+            allowClear
+            placeholder='请输入标签名称'
+            showArrow={false}
+            filterOption={false}
+            onSearch={searchTagList}
+            options={tagList}
           />
         </Form.Item>
         <Form.Item>
