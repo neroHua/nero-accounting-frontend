@@ -37,9 +37,11 @@ const AccountingPage: React.FC<any> = () => {
   const getAccountingList = async (request : any) => {
     const data = await accountingGetByPageService({
       ...request,
-      codeEqual: request.codeEqual ? request.codeEqual : null,
-      nameEqual: request.nameEqual ? request.nameEqual : null,
-      parentId: request.parentId ? request.parentId : null,
+      billCreateTimeMin: request.billCreateTimeMin ? request.billCreateTimeMin : null,
+      billCreateTimeMax: request.billCreateTimeMax ? request.billCreateTimeMax : null,
+      billMoneyMin: request.billMoneyMin ? request.billMoneyMin : null,
+      billMoneyMax: request.billMoneyMax ? request.billMoneyMax : null,
+      valuable: request.valuable ? request.valuable : null,
     })
 
     setAccountingList(data?.dataList || []);
@@ -52,9 +54,11 @@ const AccountingPage: React.FC<any> = () => {
     });
     setAccountingSearch({
       values: {
-        codeEqual: request.codeEqual,
-        nameEqual: request.nameEqual,
-        parentId: request.parentId,
+        billCreateTimeMin: request.billCreateTimeMin,
+        billCreateTimeMax: request.billCreateTimeMax,
+        billMoneyMin: request.billMoneyMin,
+        billMoneyMax: request.billMoneyMax,
+        valuable: request.valuable,
       }
     });
   };
@@ -125,8 +129,8 @@ const AccountingPage: React.FC<any> = () => {
   }
 
   useEffect(() => {
-    const {pageNumber = 1, pageSize = 10, codeEqual, nameEqual, parentId} = querystring.parse(location.search);
-    getAccountingList({pageNumber, pageSize, codeEqual, nameEqual, parentId});
+    const {pageNumber = 1, pageSize = 10, billCreateTimeMin, billCreateTimeMax, billMoneyMin, billMoneyMax, valuable } = querystring.parse(location.search);
+    getAccountingList({pageNumber, pageSize, billCreateTimeMin, billCreateTimeMax, billMoneyMin, billMoneyMax, valuable });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location]);
 
