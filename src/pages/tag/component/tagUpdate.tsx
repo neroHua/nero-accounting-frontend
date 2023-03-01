@@ -29,6 +29,7 @@ const TagUpdate : React.FC<TagUpdateProps> = props => {
       placement='right'
       onClose={onCancel}
       open={visible}
+      forceRender={true}
     >
       <Form
         form={form}
