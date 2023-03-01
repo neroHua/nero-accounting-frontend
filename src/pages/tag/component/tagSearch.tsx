@@ -79,7 +79,7 @@ const TagSearch : React.FC<TagSearchProps> = props => {
         name='parentId'
         style={{width: '220px'}}
         rules={[
-          {required: false, message: '请输入父标签id!'},
+          {required: false, message: '请输入父标签名称!'},
         ]}
       >
         <Select
