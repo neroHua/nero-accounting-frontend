@@ -30,6 +30,7 @@ const AccountingUpdate : React.FC<AccountingUpdateProps> = props => {
       placement='right'
       onClose={onCancel}
       open={visible}
+      forceRender={true}
     >
       <Form
         form={form}
