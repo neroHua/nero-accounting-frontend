@@ -191,7 +191,7 @@ const AccountingPage: React.FC<any> = () => {
         const valuable = ValuableEnumeration.filter((item : any) => {
           return item.value === record.valuable;
         });
-        return valuable[0].label || '-';
+        return valuable[0]?.label || '-';
       },
     },
     {
