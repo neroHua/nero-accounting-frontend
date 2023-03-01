@@ -5,9 +5,6 @@ import {
   accountingAddService,
   accountingUpdateService,
   accountingDeleteService,
-  accountingTagAddService,
-  accountingTagDeleteService,
-  accountingTagGetByPageService
 } from '../../service/accounting/accounting.js';
 import { ValuableEnumeration } from '../../enumeration/accounting/accounting';
 import { useLocation } from 'react-router-dom';
@@ -19,6 +16,8 @@ import AccountingUpdate from './component/accountingUpdate.tsx'
 import AccountingAdd from './component/accountingAdd.tsx'
 // @ts-ignore
 import AccountingSearch from './component/accountingSearch.tsx'
+// @ts-ignore
+import AccountingTag from './component/accountingTag.tsx'
 
 const AccountingPage: React.FC<any> = () => {
   let location = useLocation();
@@ -128,6 +127,18 @@ const AccountingPage: React.FC<any> = () => {
     getAccountingList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...accountingSearch.values});
   }
 
+  const [accountingTag , setAccountingTag] = useState<any>({
+    visible: false,
+    id: {},
+  });
+
+  const accountingTagShow = (record : any) => {
+    setAccountingTag({
+      visible : true,
+      id: record?.id,
+    });
+  }
+
   useEffect(() => {
     const {pageNumber = 1, pageSize = 10, billCreateTimeMin, billCreateTimeMax, billMoneyMin, billMoneyMax, valuable } = querystring.parse(location.search);
     getAccountingList({pageNumber, pageSize, billCreateTimeMin, billCreateTimeMax, billMoneyMin, billMoneyMax, valuable });
@@ -216,6 +227,14 @@ const AccountingPage: React.FC<any> = () => {
           >
             删除
           </Button>
+          <Button
+            type="primary"
+            onClick={(e) => {
+              accountingTagShow(record);
+            }}
+          >
+            标签
+          </Button>
         </div>);
       },
     },
@@ -273,6 +292,15 @@ const AccountingPage: React.FC<any> = () => {
         values={accountingUpdate.values}
       >
       </AccountingUpdate>
+
+      <AccountingTag
+        visible={accountingTag.visible}
+        onCancel={() => {
+          setAccountingTag({...accountingTag, visible: false});
+        }}
+        id={accountingTag.id}
+      >
+      </AccountingTag>
     </div>
   );
 };
