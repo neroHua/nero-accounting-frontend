@@ -72,6 +72,7 @@ const AccountingPage: React.FC<any> = () => {
       visible : true,
       values: {
         ...record,
+        billCreateTime: moment(),
       }
     });
   }
