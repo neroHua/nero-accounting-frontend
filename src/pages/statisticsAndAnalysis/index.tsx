@@ -22,29 +22,12 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
     data: totalMoneyForEveryMonthDataList,
     xField: 'month',
     yField: 'money',
-    xAxis: {
-      label: {
-        autoHide: true,
-        autoRotate: false,
-      },
-    },
-    meta: {
-      month: {
-        alias: '月',
-      },
-      money: {
-        alias: '金钱',
-      },
-    },
   };
 
   const monthLineConfig = {
     data: totalMoneyForEveryMonthDataList,
     xField: 'month',
     yField: 'money',
-    xAxis: {
-      tickCount: 5,
-    },
   };
 
   const [totalMoneyForEverydayDataList , setTotalMoneyForEverydayDataList] = useState<any[]>([]);
@@ -62,29 +45,12 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
     data: totalMoneyForEverydayDataList,
     xField: 'day',
     yField: 'money',
-    xAxis: {
-      label: {
-        autoHide: true,
-        autoRotate: false,
-      },
-    },
-    meta: {
-      month: {
-        alias: '月',
-      },
-      money: {
-        alias: '金钱',
-      },
-    },
   };
 
   const dayLineConfig = {
     data: totalMoneyForEverydayDataList,
     xField: 'day',
     yField: 'money',
-    xAxis: {
-      tickCount: 5,
-    },
   };
 
   const [totalMoneyForEverydayCompareDataList , setTotalMoneyForEverydayCompareDataList] = useState<any[]>([]);
@@ -115,14 +81,20 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
     ]);
   }
 
+  const dayColumnCompareConfig = {
+    data: totalMoneyForEverydayCompareDataList,
+    xField: 'day',
+    yField: 'money',
+    seriesField: 'category',
+    isGroup: true,
+    color: ['#1979C9', '#D62A0D', '#FAA219'],
+  };
+
   const dayLineCompareConfig = {
     data: totalMoneyForEverydayCompareDataList,
     xField: 'day',
     yField: 'money',
     seriesField: 'category',
-    xAxis: {
-      tickCount: 5,
-    },
     color: ['#1979C9', '#D62A0D', '#FAA219'],
   };
 
@@ -137,9 +109,10 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
     <div>
       <Column {...monthColumnConfig} />
       <Line {...monthLineConfig} />
+
       <Column {...dayColumnConfig} />
       <Line {...dayLineConfig} />
-
+      <Column {...dayColumnCompareConfig} />
       <Line {...dayLineCompareConfig} />
     </div>
   );
