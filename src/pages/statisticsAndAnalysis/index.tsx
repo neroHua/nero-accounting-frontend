@@ -3,6 +3,8 @@ import {
   totalMoneyForEveryMonthService,
 } from '../../service/statisticsAndAnalysis/statisticsAndAnalysis.js';
 
+import { Column, Line } from '@ant-design/plots';
+
 const StatisticsAndAnalysisPage: React.FC<any> = () => {
   const [totalMoneyForEveryMonthDataList , setTotalMoneyForEveryMonthDataList] = useState<any[]>([]);
 
@@ -14,6 +16,36 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
 
     setTotalMoneyForEveryMonthDataList(data);
   }
+
+  const monthColumnConfig = {
+    data: totalMoneyForEveryMonthDataList,
+    xField: 'month',
+    yField: 'money',
+    xAxis: {
+      label: {
+        autoHide: true,
+        autoRotate: false,
+      },
+    },
+    meta: {
+      month: {
+        alias: '月',
+      },
+      money: {
+        alias: '金钱',
+      },
+    },
+  };
+
+  const monthLineConfig = {
+    data: totalMoneyForEveryMonthDataList,
+    xField: 'month',
+    yField: 'money',
+    xAxis: {
+      tickCount: 5,
+    },
+  };
+
   useEffect(() => {
     getTotalMoneyForEveryMonthDataList({});
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -21,7 +53,8 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
 
   return (
     <div>
-      统计与分析
+      <Column {...monthColumnConfig} />
+      <Line {...monthLineConfig} />
     </div>
   );
 };
