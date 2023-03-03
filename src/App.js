@@ -8,6 +8,7 @@ function App() {
       <NavLink to="/login">登录</NavLink>
       <NavLink to="/tag">标签</NavLink>
       <NavLink to="/accounting">账单</NavLink>
+      <NavLink to="/statisticsAndAnalysis">统计与分析</NavLink>
       <Routes>
         {routes.map((item, index) => {
             return (
