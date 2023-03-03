@@ -49,7 +49,7 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
 
   const [totalMoneyForEverydayDataList , setTotalMoneyForEverydayDataList] = useState<any[]>([]);
 
-  const getTotalMoneyForEverydaytDataList = async (request: any) => {
+  const getTotalMoneyForEverydayDataList = async (request: any) => {
     const data = await totalMoneyForEverydayService({...request});
     if (data?.success) {
       return;
@@ -87,9 +87,49 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
     },
   };
 
+  const [totalMoneyForEverydayCompareDataList , setTotalMoneyForEverydayCompareDataList] = useState<any[]>([]);
+
+  const getTotalMoneyForEverydayCompareDataList = async (request: any) => {
+    const dataAll = await totalMoneyForEverydayService({...request});
+    const dataAllNew : any[] = [];
+    dataAll.forEach((item) => {
+      dataAllNew.push({ ...item, category: 'all' });
+    });
+
+    const dataValuable = await totalMoneyForEverydayService({...request, valuable: true});
+    const dataValuableNew : any[] = [];
+    dataValuable.forEach((item) => {
+      dataValuableNew.push({ ...item, category: 'valuable' });
+    });
+
+    const dataValueless = await totalMoneyForEverydayService({...request, valuable: false});
+    const dataValuelessNew : any[] = [];
+    dataValueless.forEach((item) => {
+      dataValuelessNew.push({ ...item, category: 'valueless' });
+    });
+
+    setTotalMoneyForEverydayCompareDataList([
+      ...dataAllNew,
+      ...dataValuableNew,
+      ...dataValuelessNew,
+    ]);
+  }
+
+  const dayLineCompareConfig = {
+    data: totalMoneyForEverydayCompareDataList,
+    xField: 'day',
+    yField: 'money',
+    seriesField: 'category',
+    xAxis: {
+      tickCount: 5,
+    },
+    color: ['#1979C9', '#D62A0D', '#FAA219'],
+  };
+
   useEffect(() => {
     getTotalMoneyForEveryMonthDataList({});
-    getTotalMoneyForEverydaytDataList({});
+    getTotalMoneyForEverydayDataList({});
+    getTotalMoneyForEverydayCompareDataList({});
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -99,6 +139,8 @@ const StatisticsAndAnalysisPage: React.FC<any> = () => {
       <Line {...monthLineConfig} />
       <Column {...dayColumnConfig} />
       <Line {...dayLineConfig} />
+
+      <Line {...dayLineCompareConfig} />
     </div>
   );
 };
