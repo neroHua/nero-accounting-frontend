@@ -6,3 +6,11 @@ export async function totalMoneyForEveryMonthService(data) {
     data,
   )
 }
+
+export async function totalMoneyForEverydayService(data) {
+  return get(
+    'statisticsAndAnalysis/totalMoneyForEveryday',
+    data,
+  )
+}
+
