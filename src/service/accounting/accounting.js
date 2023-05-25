@@ -7,6 +7,13 @@ export async function accountingAddService(data) {
   )
 }
 
+export async function accountingAddListService(data) {
+  return post(
+    'accounting/list',
+    data,
+  )
+}
+
 export async function accountingDeleteService(data) {
   return deleteMethod(
     'accounting/' + data,
