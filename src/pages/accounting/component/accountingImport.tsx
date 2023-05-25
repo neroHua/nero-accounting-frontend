@@ -17,10 +17,9 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
 
   const importAccountListFromFile = (e : any) => {
     const files = e.target.files;
-    var fileReader = new FileReader();
-    let data : any = null;
+    const fileReader = new FileReader();
     fileReader.onload = function(ev) {
-      data = ev?.target?.result;
+      const data = ev?.target?.result;
       const workbook : WorkBook = XLSX.read(data, {type: 'binary'});
       const sheetNames : string[] = workbook.SheetNames;
       const worksheet : WorkSheet = workbook.Sheets[sheetNames[0]];
@@ -28,25 +27,33 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
       const maxString : string = ref.replace('A1:L', '')
       const max = Number.parseInt(maxString, 10);
 
-      console.log(worksheet.A26, worksheet.A27, worksheet.B26, worksheet.B27, max);
       const accountingListTemp : any[] = [];
       for (let i = 26; i <= max; i++) {
         const accountingTemp = {
-          id: i,
+          id: i - 26,
           billCreateTime: moment(((worksheet['A' + i].v - 70 * 365 - 19) * 86400 - 8 * 3600) * 1000),
           billMoney: worksheet['G' + i].v,
-          description: worksheet['C' + i].v,
+          description: worksheet['B' + i].v + worksheet['C' + i].v + worksheet['E' + i].v,
+          type: worksheet['F' + i].v,
         }
         accountingListTemp.push(accountingTemp);
       }
-      console.log(accountingListTemp);
       setAccountingList(accountingListTemp);
-      // const excelData = XLSX.utils.sheet_to_json(worksheet);
-      // console.log(excelData[21], excelData[22]);
     };
     fileReader.readAsText(files[0], 'GB2312');
-    // fileReader.readAsBinaryString(files[0]);
   }
+
+  const handleDelete = (record : any) => {
+    const newAccountingList = accountingList.filter(item => item.id !== record.id);
+    console.log(newAccountingList);
+    setAccountingList(newAccountingList);
+
+    let myArray = ["apple", "banana", "orange", "grape"];
+    const myArray1 = myArray.filter(function(item) {
+      return item !== "banana"
+    });
+    console.log(myArray1, myArray);
+  };
 
   useEffect(() => {
   }, []);
@@ -55,6 +62,7 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
     {
       title: '账单创建时间',
       dataIndex: 'billCreateTime',
+      width: 200,
       render: (text, record, index) => {
         return moment(record.billCreateTime).format(moment.HTML5_FMT.DATETIME_LOCAL_SECONDS);
       },
@@ -68,18 +76,10 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
       dataIndex: 'description',
     },
     {
-      title: '复盘描述',
-      dataIndex: 'reviewDescription',
-    },
-    {
-      title: '是否值得',
-      dataIndex: 'valuable',
-      render: (text, record, index) => {
-        const valuable = ValuableEnumeration.filter((item : any) => {
-          return item.value === record.valuable;
-        });
-        return valuable[0]?.label || '-';
-      },
+      title: '类型',
+      dataIndex: 'type',
+      width: 100,
+      editable: true,
     },
     {
       title: '操作',
@@ -88,17 +88,9 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
         return (<div>
           <Button
             type="primary"
-            onClick={(e) => {
-              // accountingUpdateShow(record);
-            }}
-          >
-            修改
-          </Button>
-          <Button
-            type="primary"
             danger
             onClick={(e) => {
-              // accountingDelete(record);
+              handleDelete(record);
             }}
           >
             删除
@@ -115,9 +107,13 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
       onCancel={onCancel}
       open={visible}
       forceRender={true}
+      width={1080}
     >
       <div style={{display: 'flex'}}>
-        <input type="file" id="excel-file" onChange={(e) => importAccountListFromFile(e)}/>
+        <input
+          type="file"
+          onChange={ (e) => importAccountListFromFile(e)}
+        />
       </div>
       <Table
         dataSource={accountingList}
