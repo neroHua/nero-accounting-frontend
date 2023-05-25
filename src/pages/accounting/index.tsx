@@ -15,6 +15,8 @@ import AccountingUpdate from './component/accountingUpdate.tsx'
 // @ts-ignore
 import AccountingAdd from './component/accountingAdd.tsx'
 // @ts-ignore
+import AccountingImport from './component/accountingImport.tsx'
+// @ts-ignore
 import AccountingSearch from './component/accountingSearch.tsx'
 // @ts-ignore
 import AccountingTag from './component/accountingTag.tsx'
@@ -86,6 +88,28 @@ const AccountingPage: React.FC<any> = () => {
     setAccountingAdd({
       visible : false,
       values: {}
+    });
+    getAccountingList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...accountingSearch.values});
+  }
+
+  const [accountingImport , setAccountingImport] = useState<any>({
+    visible: false,
+  });
+
+  const accountingImportShow = (record : any) => {
+    setAccountingImport({
+      visible : true,
+    });
+  }
+
+  const accountingImportSubmit = async (values : any) => {
+    const data = await accountingAddService({...values});
+    if (data?.success) {
+      return;
+    }
+
+    setAccountingAdd({
+      visible : false,
     });
     getAccountingList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...accountingSearch.values});
   }
@@ -259,6 +283,14 @@ const AccountingPage: React.FC<any> = () => {
         >
           新增
         </Button>
+        <Button
+          type='primary'
+          onClick={(e) => {
+            accountingImportShow({});
+          }}
+        >
+          导入
+        </Button>
       </div>
 
       <Table
@@ -283,6 +315,15 @@ const AccountingPage: React.FC<any> = () => {
         values={accountingAdd.values}
       >
       </AccountingAdd>
+
+      <AccountingImport
+        visible={accountingImport.visible}
+        onCancel={() => {
+          setAccountingImport({visible: false});
+        }}
+        onSubmit={accountingImportSubmit}
+      >
+      </AccountingImport>
 
       <AccountingUpdate
         visible={accountingUpdate.visible}
