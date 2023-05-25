@@ -3,6 +3,7 @@ import { Table, Button } from 'antd';
 import {
   accountingGetByPageService,
   accountingAddService,
+  accountingAddListService,
   accountingUpdateService,
   accountingDeleteService,
 } from '../../service/accounting/accounting.js';
@@ -103,12 +104,20 @@ const AccountingPage: React.FC<any> = () => {
   }
 
   const accountingImportSubmit = async (values : any) => {
-    const data = await accountingAddService({...values});
+    const submitValue : any[] = [];
+    values.forEach(element => {
+      submitValue.push({
+        billCreateTime: element.billCreateTime,
+        billMoney: element.billMoney,
+        description: element.description,
+      });
+    });
+    const data = await accountingAddListService(submitValue);
     if (data?.success) {
       return;
     }
 
-    setAccountingAdd({
+    setAccountingImport({
       visible : false,
     });
     getAccountingList({pageNumber: pagination.current, pageSize: pagination.pageSize, ...accountingSearch.values});
@@ -289,7 +298,7 @@ const AccountingPage: React.FC<any> = () => {
             accountingImportShow({});
           }}
         >
-          导入
+          导入支付宝账单
         </Button>
       </div>
 
