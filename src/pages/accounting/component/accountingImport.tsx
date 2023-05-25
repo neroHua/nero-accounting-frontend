@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Modal, Button, Table } from 'antd';
-import { ValuableEnumeration } from '../../../enumeration/accounting/accounting';
 import moment from 'moment';
 import XLSX, { WorkBook, WorkSheet } from 'xlsx';
 
@@ -45,14 +44,7 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
 
   const handleDelete = (record : any) => {
     const newAccountingList = accountingList.filter(item => item.id !== record.id);
-    console.log(newAccountingList);
     setAccountingList(newAccountingList);
-
-    let myArray = ["apple", "banana", "orange", "grape"];
-    const myArray1 = myArray.filter(function(item) {
-      return item !== "banana"
-    });
-    console.log(myArray1, myArray);
   };
 
   useEffect(() => {
