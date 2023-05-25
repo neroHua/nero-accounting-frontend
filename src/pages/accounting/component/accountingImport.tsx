@@ -32,8 +32,8 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
           id: i - 26,
           billCreateTime: moment(((worksheet['A' + i].v - 70 * 365 - 19) * 86400 - 8 * 3600) * 1000),
           billMoney: worksheet['G' + i].v,
-          description: worksheet['B' + i].v + worksheet['C' + i].v + worksheet['E' + i].v,
-          type: worksheet['F' + i].v,
+          description: worksheet['B' + i].v?.replaceAll(' ', '') + worksheet['C' + i].v?.replaceAll(' ', '') + worksheet['E' + i].v?.replaceAll(' ', ''),
+          type: worksheet['F' + i].v?.replaceAll(' ', ''),
         }
         accountingListTemp.push(accountingTemp);
       }
@@ -94,8 +94,10 @@ const AccountingImport : React.FC<AccountingImportProps> = props => {
 
   return (
     <Modal
-      title='导入账单'
-      onOk={onSubmit}
+      title='导入支付宝账单'
+      onOk={(e) => {
+        onSubmit(accountingList);
+      }}
       onCancel={onCancel}
       open={visible}
       forceRender={true}
